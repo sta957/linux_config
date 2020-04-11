@@ -1,8 +1,0 @@
-alias ssys="sudo systemctl"
-      alias sai="sudo apt install"
-      alias saud="sudo apt update"
-      alias saug="sudo apt upgrade"
-      alias sus="sudo ufw status"
-      alias sun="sudo netstat -tulpn"
-      alias lsl="ls -l"
-      alias fucking="sudo"
