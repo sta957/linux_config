@@ -9,15 +9,15 @@
 
 # update and upgrade ppas
 
-#sudo apt update 
-#sudo apt -y upgrade
+sudo apt update 
+sudo apt -y upgrade
 
 # install necessary packages 
 
-#sudo apt install -y git
-#sudo apt install -y speedtestcli
-#sudo apt install -y htop
-#sudo apt install -y neofetch
+sudo apt install -y git
+sudo apt install -y speedtestcli
+sudo apt install -y htop
+sudo apt install -y neofetch
 
 
 # modify .bashrc
@@ -25,7 +25,7 @@
 B_FILE="$HOME/.bashrc"
 
 # create .bashrc if not exists
-if test -f $B_FILE; then
+if test ! -f $B_FILE; then
 	touch "$B_FILE"
 	echo "Creating $B_FILE"
 fi	
@@ -45,13 +45,13 @@ alias fucking="sudo"' | cat - $B_FILE > temp && mv temp "$B_FILE"
 
 # modify .vimrc and install Vundle as packetmanager
 
-if test -f "/$HOME/.vim/bundle/Vundle.vim"; then
+if test ! -f "/$HOME/.vim/bundle/Vundle.vim"; then
 	git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
 fi
 
 V_FILE="$HOME/.vimrc"
 
-if test -f "$V_FILE"; then
+if test ! -f "$V_FILE"; then
 	touch "$V_FILE"
 	echo "Creating $V_FILE"
 fi
