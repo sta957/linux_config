@@ -6,6 +6,15 @@
 # Made by sta957@github in v0.1 on 2020-04-11
 #
 
+helpFunction(){
+	echo ""
+	echo "Usage: $0 -u -s -p -h hostname123"
+	echo -e "\t-u Set ufw-settings (only ssh and http/s)"
+   	echo -e "\t-s Setup a mariadb sql-server"
+   	echo -e "\t-p Add the python configuration to this machine"
+	echo -e "\t-h Set hostname to given value"
+   	exit 1 # Exit script after printing help
+}
 
 # update and upgrade ppas
 
@@ -91,3 +100,75 @@ nnoremap tc :tabclose<CR>
 " >> "$V_FILE"
 
 vim +PluginInstall +qall
+
+# set ufw-settings
+
+if [ echo $* | grep -e "--ufw" -q ] || [ echo $* | grep -e "-u" -q ]; then
+	echo "\nConfiguring UFW\n"
+	if [ -n sudo dpkg --get-selections | grep ufw ]; then
+		echo "Installing ufw"
+		sudo apt install ufw
+	fi
+	sudo ufw allow ssh/tcp
+	sudo ufw allow 80/tcp
+	sudo ufw allow 8080/tcp
+	sudo ufw allow 443/tcp
+	sudo ufw allow 8443/tcp
+	sudo ufw enable
+	echo "UFW Configuration set successfully!\n"
+	sudo ufw status numbered
+fi
+
+
+# configure sql-server
+
+if echo $* | grep -e "--sql" -q or echo $* | grep -e "-s" -q; then
+	echo "\nConfiguring SQL-Server\n"
+	if [ -n sudo dpkg --get-selections | grep mariadb-server ]; then
+		echo "Installing mariadb-server"
+		sudo apt install mariadb-server
+	fi
+	/usr/bin/mysql_secure_installation
+	service mysql start
+	service mysql enable
+fi
+
+
+# set python configuration
+
+if echo $* | grep -e "--ufw" -q or echo $* | grep -e "-u" -q; then
+	echo "\nConfiguring Python\n"
+	if [ -n sudo dpkg --get-selections | grep python3 ]; then
+		echo "Installing python3.6"
+		sudo apt install python3.6
+	fi
+	if [ -n sudo dpkg --get-selections | grep python3-pip ]; then
+		echo "Installing pip3"
+		sudo apt install python3-pip
+	fi
+	if [ -n sudo dpkg --get-selections | grep python3.6-venv ]; then
+		echo "Installing virtualenv"
+		sudo pip3 install virtualenv
+	fi
+	echo "\nActual python version:\n"
+	echo "$(python3 --version)" 
+	echo ""
+fi
+
+# set hostname to machine
+
+# TODO
+if echo $* | grep -e "--ufw" -q or echo $* | grep -e "-u" -q; then
+	echo "\nSetting hostname to xy\n"
+	echo "Please enter a hostname"
+	read -p "Hostname:" hostname_var
+	if [ -n $hostname_var]; then
+		sudo echo $hostname_var > /etc/hostname
+		sudo echo $hostname_var >> /etc/hosts
+fi
+
+echo ""
+echo "Successfully modified and installed the system for yout purposes Timo"
+echo ""
+echo "			---- Have a nice day :) ----"
+
