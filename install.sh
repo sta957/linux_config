@@ -40,6 +40,7 @@ if test ! -f $B_FILE; then
 fi	
 
 echo ':
+alias ..="cd .."
 alias ssys="sudo systemctl"
 alias sai="sudo apt install"
 alias saud="sudo apt update"
