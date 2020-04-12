@@ -58,6 +58,12 @@ if test ! -f "/$HOME/.vim/bundle/Vundle.vim"; then
 	git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
 fi
 
+if [-n sudo dpkg --get-selections | grep kite ]; then
+	sudo wget https://linux.kite.com/dls/linux/current
+	bash current 
+	rm -f current
+fi
+
 V_FILE="$HOME/.vimrc"
 
 if test ! -f "$V_FILE"; then
@@ -90,6 +96,8 @@ set hlsearch
 set background=dark
 set termguicolors
 
+let g:kite_autocomplete=1
+let g:kite_supported_languages = ['python','go']
 let g:airline_theme='breezy'
 let python_highlight_all=1
 
@@ -101,7 +109,8 @@ nnoremap tc :tabclose<CR>
 
 vim +PluginInstall +qall
 
-# set ufw-settings
+
+# install and configure ufw
 
 if [ echo $* | grep -e "--ufw" -q ] || [ echo $* | grep -e "-u" -q ]; then
 	echo "\nConfiguring UFW\n"
@@ -165,6 +174,7 @@ if echo $* | grep -e "--ufw" -q or echo $* | grep -e "-u" -q; then
 		sudo echo $hostname_var > /etc/hostname
 		sudo echo $hostname_var >> /etc/hosts
 fi
+
 
 echo ""
 echo "Successfully modified and installed the system for yout purposes Timo"
