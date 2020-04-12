@@ -157,7 +157,6 @@ fi
 
 # set hostname to machine
 
-# TODO
 if echo $* | grep -e "--ufw" -q or echo $* | grep -e "-u" -q; then
 	echo "\nSetting hostname to xy\n"
 	echo "Please enter a hostname"
