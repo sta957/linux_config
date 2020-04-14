@@ -132,7 +132,7 @@ fi
 
 # configure sql-server
 
-if echo $* | grep -e "--sql" -q or echo $* | grep -e "-s" -q; then
+if [ echo $* | grep -e "--sql" -q or echo $* | grep -e "-s" -q ]; then
 	echo "\nConfiguring SQL-Server\n"
 	if [ -n sudo dpkg --get-selections | grep mariadb-server ]; then
 		echo "Installing mariadb-server"
@@ -146,7 +146,7 @@ fi
 
 # set python configuration
 
-if echo $* | grep -e "--ufw" -q or echo $* | grep -e "-u" -q; then
+if [ echo $* | grep -e "--ufw" -q or echo $* | grep -e "-u" -q ]; then
 	echo "\nConfiguring Python\n"
 	if [ -n sudo dpkg --get-selections | grep python3 ]; then
 		echo "Installing python3.6"
@@ -167,7 +167,7 @@ fi
 
 # set hostname to machine
 
-if echo $* | grep -e "--ufw" -q or echo $* | grep -e "-u" -q; then
+if [ echo $* | grep -e "--ufw" -q or echo $* | grep -e "-u" -q ]; then
 	echo "\nSetting hostname to xy\n"
 	echo "Please enter a hostname"
 	read -p "Hostname:" hostname_var
